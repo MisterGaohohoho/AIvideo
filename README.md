@@ -61,6 +61,23 @@ Both files preserve the original Chinese text I supplied. For case one, I pass t
 
 I inspect the result for a natural face, consistent exposed-skin texture, correct hands and fingers, unobstructed eyes and mouth, correct product structure and scale, believable contact between the person and product, and the absence of unintended text or interface elements. If a critical check fails, I regenerate the still instead of sending it into the video stage.
 
+### How I Keep a Product-Holding First Frame Natural
+
+Natural product handling does not come from adding more words such as "relaxed" or "lifestyle." The product scale, load-bearing relationship, and contact points have to be correct first. The human-model first frame now uses two separate passes: the first calibrates product proportions, frame occupancy, perspective, and the two-handed grip; product-detail refinement begins only after scale and contact pass inspection.
+
+1. Supply a real-product image together with exact dimensions, a size-comparison image, or one frame whose scale the user has approved. When Image 1 is the scale anchor, its product aspect ratio, size relative to the person, and frame occupancy override category-based assumptions.
+2. Deliver two requested versions as two independent 9:16 images. Version A uses one hand under the lower edge and the other on a side edge. Version B supports both lower side corners with a small natural difference in elbow height. Both versions avoid fingertip-only pinching, missing thumbs, fingers painted onto the product, painful wrist angles, and a product that covers the eyes or mouth.
+3. After the scale frame passes, preserve it unchanged and duplicate it as a reference with exactly the same pixel dimensions, aspect ratio, crop, and canvas. Apply fog mosaic only inside the product center. Keep the complete product border, four corners, perspective edges, both hands, and every contact point visible.
+4. Upload the real-product image, approved scale frame, and same-canvas mosaic reference together for refinement. The real-product image controls product structure and texture, the approved frame controls person, composition, scale, and grip, and the mosaic reference marks only the product-center region to restore. Refinement must not change the product border, size, location, person, hands, camera, lighting, or scene.
+
+The complete execution rules and copy-ready two-version example are in [`human-model-product-hold-size-refinement.md`](./skills/facebook-diy-video-workflow/references/human-model-product-hold-size-refinement.md). This product-center mosaic is a first-frame refinement aid; it does not enter the later face-mask module.
+
+<p align="center">
+  <img src="./docs/images/natural-product-hold-first-frame-mosaic.png" alt="Natural two-handed product grip with a product-center mosaic reference" width="420">
+</p>
+
+Only the product center is obscured above. The product border, apparent scale, hand contact points, and person pose remain available for direct inspection.
+
 ## Tool Fallback Strategy
 
 The same script and assets can move between tools according to budget, queue time, and generation quality without rebuilding the entire workflow.
@@ -273,6 +290,7 @@ AIvideo/
 │   └── images/
 │       ├── prompthub-face-tools-entry.png
 │       ├── prompthub-face-mask-example.png
+│       ├── natural-product-hold-first-frame-mosaic.png
 │       └── complex-wired-product-example.jpg
 └── skills/
     ├── facebook-diy-video-workflow/
@@ -288,6 +306,7 @@ AIvideo/
     │       ├── human-model-prompts/
     │       │   ├── natural-lifestyle-first-frame-prompt.md
     │       │   └── beauty-presenter-first-frame-prompt.md
+    │       ├── human-model-product-hold-size-refinement.md
     │       ├── face-mask-preprocessing.md
     │       ├── complex-product-generation-risks.md
     │       ├── veo-grok-multi-scene-prompt.md
@@ -319,8 +338,9 @@ The reference prompts below come directly from the workflow I actually use:
 
 I will keep improving the Skill's triggering and routing, but the reference prompts above remain immutable source text by default.
 
-Face masking and complex-product screening are operational modules that do not rewrite the field-tested prompts above:
+Natural product-holding refinement, face masking, and complex-product screening are operational modules that do not rewrite the field-tested prompts above:
 
+- [`human-model-product-hold-size-refinement.md`](./skills/facebook-diy-video-workflow/references/human-model-product-hold-size-refinement.md): product-scale calibration, natural two-handed contact, independent variants, and same-canvas product-center mosaic refinement.
 - [`face-mask-preprocessing.md`](./skills/facebook-diy-video-workflow/references/face-mask-preprocessing.md): face-reference preprocessing workflow.
 - [`complex-product-generation-risks.md`](./skills/facebook-diy-video-workflow/references/complex-product-generation-risks.md): complex-product feasibility checks and fallback rules.
 

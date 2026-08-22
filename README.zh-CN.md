@@ -61,6 +61,23 @@ flowchart LR
 
 首帧出来后，我会检查人脸是否自然、全身裸露皮肤质感是否统一、双手和手指是否正确、眼睛和嘴是否被挡、产品结构和尺寸是否正确、人与产品的接触关系是否成立，以及画面里有没有多余文字或界面。任何一个关键项不对，我都会先重出图，不直接进入视频阶段。
 
+### 如何让人物的首帧拿着产品保持自然
+
+自然持物不是多加几个“放松、生活化”的形容词，而是先把产品尺寸、受力和接触点做对。现在真人首帧会经过两次独立处理：第一遍只校准产品比例、画面占比、透视和双手握持；尺寸与手部通过以后，才进行产品细节精修。
+
+1. 生成前同时提供真实产品图和尺寸图、尺寸对照图或一张已经确认尺寸正确的首帧。图一被指定为尺寸锚点时，产品长宽比、相对人物大小和画面占比都以图一为准，不根据品类猜尺寸。
+2. 两个版本分别输出为两张独立的 9:16 图片。A 版用一只手托住下边缘、另一只手稳定侧边；B 版用双手托住两个下侧角，并保留轻微不对称的肘部高度。两版都避免指尖夹持、拇指消失、手指贴在产品表面、手腕过度弯折和产品挡住眼睛或嘴。
+3. 尺寸校准图通过以后，保留原图不动，再复制一张像素尺寸、画幅、裁切和画布完全相同的参考图，只在产品内部中心打雾化马赛克。产品完整外框、四角、透视边缘、双手和所有接触点必须清楚保留。
+4. 精修时同时上传真实产品图、已经确认的尺寸校准图和同画布马赛克参考图。真实产品图负责产品结构与纹理，尺寸校准图负责人物、构图、比例和握持，马赛克参考图只标记需要恢复的产品中心区域。精修不得改变产品外框、尺寸、位置、人物、双手、机位、光线或场景。
+
+完整执行规则和两版可复制示例保存在 [`human-model-product-hold-size-refinement.md`](./skills/facebook-diy-video-workflow/references/human-model-product-hold-size-refinement.md)。这套产品中心马赛克属于首帧精修辅助，不进入后面的人脸遮罩模块。
+
+<p align="center">
+  <img src="./docs/images/natural-product-hold-first-frame-mosaic.png" alt="人物自然双手持物与产品中心马赛克参考图" width="420">
+</p>
+
+上图只遮住产品中心，产品边缘、实际画面占比、双手握持点和人物姿态仍然可以直接检查。
+
 ## 工具降级策略
 
 同一套脚本与素材可以根据预算、排队时间和生成效果切换工具，而不必推翻整个流程。
@@ -273,6 +290,7 @@ AIvideo/
 │   └── images/
 │       ├── prompthub-face-tools-entry.png
 │       ├── prompthub-face-mask-example.png
+│       ├── natural-product-hold-first-frame-mosaic.png
 │       └── complex-wired-product-example.jpg
 └── skills/
     ├── facebook-diy-video-workflow/
@@ -288,6 +306,7 @@ AIvideo/
     │       ├── human-model-prompts/
     │       │   ├── natural-lifestyle-first-frame-prompt.md
     │       │   └── beauty-presenter-first-frame-prompt.md
+    │       ├── human-model-product-hold-size-refinement.md
     │       ├── face-mask-preprocessing.md
     │       ├── complex-product-generation-risks.md
     │       ├── veo-grok-multi-scene-prompt.md
@@ -319,8 +338,9 @@ AIvideo/
 
 我会继续完善 Skill 外壳的触发和路由，但上面这些参考 Prompt 默认都是不能改写的原始文本。
 
-人脸遮罩与复杂产品风险属于操作模块，不会改写上述实践 Prompt：
+自然持物尺寸精修、人脸遮罩与复杂产品风险属于操作模块，不会改写上述实践 Prompt：
 
+- [`human-model-product-hold-size-refinement.md`](./skills/facebook-diy-video-workflow/references/human-model-product-hold-size-refinement.md)：产品尺寸校准、自然双手握持、两版独立出图和同画布产品中心马赛克精修。
 - [`face-mask-preprocessing.md`](./skills/facebook-diy-video-workflow/references/face-mask-preprocessing.md)：人脸参考图预处理流程。
 - [`complex-product-generation-risks.md`](./skills/facebook-diy-video-workflow/references/complex-product-generation-risks.md)：复杂产品可生成性检查与降级规则。
 
